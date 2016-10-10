@@ -146,12 +146,46 @@ class LinkedList:
 
 #Swapping Nodes x and y (in place)
     def swapNodes(self, x, y):
-
+        #If x and y are same, no need to swap
         if x == y:
             return
 
+        #Start searching for x
+        prevX = None
+        currX = self.head
+        while currX != None and currX.data != x:
+            prevX = currX
+            currX = currX.next
 
+        #Search for y
+        prevY = None
+        currY = self.head
+        while currY != None and currY.data != y:
+            prevY = currY
+            currY = currY.next
+        #If x and y are not present, return!
+        if currX == None or currY == None:
+            return
 
+        if prevX != None:
+            prevX.next = currY
+        else:
+            self.head = currY
+        #If x is not head
+        if prevX != None:
+            prevX.next = currY
+        else:
+            self.head = currY
+            
+        #If y is not head
+        if prevY != None:
+            prevY.next = currX
+        else:
+            self.head = currX
+
+        temp = currX.next
+        currX.next = currY.next
+        currY.next = temp
 
 if __name__ == '__main__':
     llist = LinkedList()
@@ -162,9 +196,11 @@ if __name__ == '__main__':
     llist.push(4)
     llist.push(7)
     llist.printList()
-    print('Count =', llist.getCountRec(llist.head))
-    llist.deleteNodePos(3)
+    #print('Count =', llist.getCountRec(llist.head))
+    #llist.deleteNodePos(3)
+    llist.swapNodes(40,7)
     print("After")
-    print('Count =', llist.getCount())
+    llist.printList()
+    #print('Count =', llist.getCount())
     #llist.printList()
-    print('If Found = ', llist.search(200))
+    #print('If Found = ', llist.search(200))
