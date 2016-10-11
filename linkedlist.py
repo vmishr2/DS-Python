@@ -176,7 +176,7 @@ class LinkedList:
             prevX.next = currY
         else:
             self.head = currY
-            
+
         #If y is not head
         if prevY != None:
             prevY.next = currX
@@ -187,6 +187,78 @@ class LinkedList:
         currX.next = currY.next
         currY.next = temp
 
+
+    #Find Nth element
+    def getNth(self, index):
+
+        temp = self.head
+        count = 0
+
+        while(temp):
+            if (count == index):
+                return temp.data
+            count += 1
+            temp = temp.next
+
+        assert(false)
+        return 0
+
+    #Find middle element
+    def findMiddle(self):
+        temp = self.head
+        tick = False
+        half = self.head
+        while temp:
+            temp = temp.next
+            if tick:
+                half = half.next
+            tick = not tick
+        return half.data
+
+    #print Nth from last
+    def printNthfromLast(self, n):
+        main_ptr = self.head
+        ref_ptr = self.head
+
+        count = 0
+        while (count < n):
+            if (ref_ptr is None):
+                return #n > LL size
+            ref_ptr = ref_ptr.next
+            count += 1
+
+        while(ref_ptr is not None):
+            main_ptr = main_ptr.next
+            ref_ptr = ref_ptr.next
+
+        return main_ptr.data
+
+    #Get count for repetitions of a no.
+    def countRep(self, num):
+        temp = self.head
+        count = 0
+
+        while temp is not None:
+            if temp.data == num:
+                count += 1
+            temp = temp.next
+        return count
+
+    #Detect loop in a LL
+    def detectLoop(self):
+        slow_ptr = self.head
+        fast_ptr = self.head
+
+        while (slow_ptr and fast_ptr and fast_ptr.next):
+            slow_ptr = slow_ptr.next
+            fast_ptr = fast_ptr.next.next
+
+            if slow_ptr == fast_ptr:
+                return True
+        return False
+
+
+
 if __name__ == '__main__':
     llist = LinkedList()
 
@@ -194,13 +266,23 @@ if __name__ == '__main__':
     llist.push(5)
     llist.push(1)
     llist.push(4)
-    llist.push(7)
-    llist.printList()
+    #llist.push(7)
+    #llist.push(16)
+    #llist.push(1)
+    #llist.push(1)
+    #llist.push(56)
+    #llist.printList()
     #print('Count =', llist.getCountRec(llist.head))
     #llist.deleteNodePos(3)
-    llist.swapNodes(40,7)
+    #llist.swapNodes(40,7)
     print("After")
-    llist.printList()
+    #print('Nth element :', llist.getNth(10))
+    #print('Middle element :', llist.findMiddle())
+    #print('Nth element from the end :', llist.printNthfromLast(1))
+    #print('Count of 1s repeting :', llist.countRep(1))
+    llist.head.next.next.next.next = llist.head
+    print(llist.detectLoop())
+    #llist.printList()
     #print('Count =', llist.getCount())
     #llist.printList()
     #print('If Found = ', llist.search(200))
